@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @subscriber.name
+%p
+  %b Number:
+  = @subscriber.number
+
+= link_to 'Edit', edit_subscriber_path(@subscriber)
+\|
+= link_to 'Back', subscribers_path
