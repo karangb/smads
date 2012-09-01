@@ -41,7 +41,7 @@ class SubscribersController < ApplicationController
   # POST /subscribers
   # POST /subscribers.json
   def create
-    @subscriber = Subscriber.new(params[:subscriber])
+    @subscriber = current_user.subscribers.new(params[:subscriber])
 
     respond_to do |format|
       if @subscriber.save

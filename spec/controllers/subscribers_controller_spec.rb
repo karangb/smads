@@ -69,7 +69,7 @@ describe SubscribersController do
       it "creates a new Subscriber" do
         expect {
           post :create, {:subscriber => valid_attributes}
-        }.to change(Subscriber, :count).by(1)
+        }.to change(@user.subscribers, :count).by(1)
       end
 
       it "assigns a newly created subscriber as @subscriber" do
