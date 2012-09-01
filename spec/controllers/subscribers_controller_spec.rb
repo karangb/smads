@@ -38,6 +38,7 @@ describe SubscribersController do
   before :each do
     @user = FactoryGirl.create :user
     sign_in @user
+    @request.env["devise.mapping"] = Devise.mappings[:user]
   end
 
   describe "GET index" do
