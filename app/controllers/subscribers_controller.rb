@@ -1,4 +1,6 @@
 class SubscribersController < ApplicationController
+  before_filter :authenticate_user!
+  
   # GET /subscribers
   # GET /subscribers.json
   def index
