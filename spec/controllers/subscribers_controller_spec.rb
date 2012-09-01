@@ -28,13 +28,6 @@ describe SubscribersController do
     {}
   end
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # SubscribersController. Be sure to keep this updated too.
-  def valid_session
-    {}
-  end
-  
   before :each do
     @user = FactoryGirl.create :user
     sign_in @user
@@ -51,14 +44,14 @@ describe SubscribersController do
   describe "GET show" do
     it "assigns the requested subscriber as @subscriber" do
       subscriber = Subscriber.create! valid_attributes
-      get :show, {:id => subscriber.to_param}, valid_session
+      get :show, {:id => subscriber.to_param}
       assigns(:subscriber).should eq(subscriber)
     end
   end
 
   describe "GET new" do
     it "assigns a new subscriber as @subscriber" do
-      get :new, {}, valid_session
+      get :new, {}
       assigns(:subscriber).should be_a_new(Subscriber)
     end
   end
@@ -66,7 +59,7 @@ describe SubscribersController do
   describe "GET edit" do
     it "assigns the requested subscriber as @subscriber" do
       subscriber = Subscriber.create! valid_attributes
-      get :edit, {:id => subscriber.to_param}, valid_session
+      get :edit, {:id => subscriber.to_param}
       assigns(:subscriber).should eq(subscriber)
     end
   end
@@ -75,18 +68,18 @@ describe SubscribersController do
     describe "with valid params" do
       it "creates a new Subscriber" do
         expect {
-          post :create, {:subscriber => valid_attributes}, valid_session
+          post :create, {:subscriber => valid_attributes}
         }.to change(Subscriber, :count).by(1)
       end
 
       it "assigns a newly created subscriber as @subscriber" do
-        post :create, {:subscriber => valid_attributes}, valid_session
+        post :create, {:subscriber => valid_attributes}
         assigns(:subscriber).should be_a(Subscriber)
         assigns(:subscriber).should be_persisted
       end
 
       it "redirects to the created subscriber" do
-        post :create, {:subscriber => valid_attributes}, valid_session
+        post :create, {:subscriber => valid_attributes}
         response.should redirect_to(Subscriber.last)
       end
     end
@@ -95,14 +88,14 @@ describe SubscribersController do
       it "assigns a newly created but unsaved subscriber as @subscriber" do
         # Trigger the behavior that occurs when invalid params are submitted
         Subscriber.any_instance.stub(:save).and_return(false)
-        post :create, {:subscriber => {}}, valid_session
+        post :create, {:subscriber => {}}
         assigns(:subscriber).should be_a_new(Subscriber)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Subscriber.any_instance.stub(:save).and_return(false)
-        post :create, {:subscriber => {}}, valid_session
+        post :create, {:subscriber => {}}
         response.should render_template("new")
       end
     end
@@ -117,18 +110,18 @@ describe SubscribersController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Subscriber.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => subscriber.to_param, :subscriber => {'these' => 'params'}}, valid_session
+        put :update, {:id => subscriber.to_param, :subscriber => {'these' => 'params'}}
       end
 
       it "assigns the requested subscriber as @subscriber" do
         subscriber = Subscriber.create! valid_attributes
-        put :update, {:id => subscriber.to_param, :subscriber => valid_attributes}, valid_session
+        put :update, {:id => subscriber.to_param, :subscriber => valid_attributes}
         assigns(:subscriber).should eq(subscriber)
       end
 
       it "redirects to the subscriber" do
         subscriber = Subscriber.create! valid_attributes
-        put :update, {:id => subscriber.to_param, :subscriber => valid_attributes}, valid_session
+        put :update, {:id => subscriber.to_param, :subscriber => valid_attributes}
         response.should redirect_to(subscriber)
       end
     end
@@ -138,7 +131,7 @@ describe SubscribersController do
         subscriber = Subscriber.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Subscriber.any_instance.stub(:save).and_return(false)
-        put :update, {:id => subscriber.to_param, :subscriber => {}}, valid_session
+        put :update, {:id => subscriber.to_param, :subscriber => {}}
         assigns(:subscriber).should eq(subscriber)
       end
 
@@ -146,7 +139,7 @@ describe SubscribersController do
         subscriber = Subscriber.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Subscriber.any_instance.stub(:save).and_return(false)
-        put :update, {:id => subscriber.to_param, :subscriber => {}}, valid_session
+        put :update, {:id => subscriber.to_param, :subscriber => {}}
         response.should render_template("edit")
       end
     end
@@ -156,13 +149,13 @@ describe SubscribersController do
     it "destroys the requested subscriber" do
       subscriber = Subscriber.create! valid_attributes
       expect {
-        delete :destroy, {:id => subscriber.to_param}, valid_session
+        delete :destroy, {:id => subscriber.to_param}
       }.to change(Subscriber, :count).by(-1)
     end
 
     it "redirects to the subscribers list" do
       subscriber = Subscriber.create! valid_attributes
-      delete :destroy, {:id => subscriber.to_param}, valid_session
+      delete :destroy, {:id => subscriber.to_param}
       response.should redirect_to(subscribers_url)
     end
   end
