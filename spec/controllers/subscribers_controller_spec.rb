@@ -19,6 +19,7 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe SubscribersController do
+  
 
   # This should return the minimal set of attributes required to create a valid
   # Subscriber. As you add validations to Subscriber, be sure to
@@ -33,11 +34,16 @@ describe SubscribersController do
   def valid_session
     {}
   end
+  
+  before :each do
+    @user = FactoryGirl.create :user
+    sign_in @user
+  end
 
   describe "GET index" do
     it "assigns all subscribers as @subscribers" do
-      subscriber = Subscriber.create! valid_attributes
-      get :index, {}, valid_session
+      subscriber = @user.subscribers.create! valid_attributes
+      get :index
       assigns(:subscribers).should eq([subscriber])
     end
   end

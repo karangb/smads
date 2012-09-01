@@ -1,9 +1,8 @@
 class SubscribersController < ApplicationController
-  
   # GET /subscribers
   # GET /subscribers.json
   def index
-    @subscribers = Subscriber.all
+    @subscribers = current_user.subscribers.all
 
     respond_to do |format|
       format.html # index.html.erb
