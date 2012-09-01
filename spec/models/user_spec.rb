@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe User do
   
+  it {should have_many :subscribers}
+  
   before(:each) do
     @attr = { 
       :name => "Example User",
