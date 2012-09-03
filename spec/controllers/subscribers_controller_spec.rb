@@ -33,6 +33,18 @@ describe SubscribersController do
     sign_in @user
   end
 
+  describe "POST broadcast" do
+    it "should invoke mobile.send to all subscribers" do
+      @user.subscribers.create!(:number => "123")
+      @user.subscribers.create!(:number => "456")
+      
+      Mobile.any_instance.should_receive(:send_sms).with("123")
+      Mobile.any_instance.should_receive(:send_sms).with("456")
+
+      post :broadcast
+    end  
+  end
+  
   describe "GET index" do
     it "assigns all subscribers as @subscribers" do
       subscriber = @user.subscribers.create! valid_attributes

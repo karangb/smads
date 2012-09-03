@@ -1,5 +1,21 @@
 class SubscribersController < ApplicationController
   before_filter :authenticate_user!
+  
+  # POST /subscribers/broadcast
+  # POST /subscribers/broadcast.json
+  def broadcast
+    mobile = Mobile.new
+    current_user.subscribers
+    current_user.subscribers.each do |subscriber|
+      mobile.send_sms(subscriber.number)
+    end
+    
+    respond_to do |format|
+      format.html { redirect_to action: :index} # index.html.erb
+      format.json { render json: @subscribers }
+    end
+  end
+  
   # GET /subscribers
   # GET /subscribers.json
   def index

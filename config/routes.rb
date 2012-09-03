@@ -1,7 +1,7 @@
 Smads::Application.routes.draw do
   resources :subscribers do
     collection do
-      post :broadcast
+      get :broadcast
     end
   end
 
