@@ -1,5 +1,9 @@
 Smads::Application.routes.draw do
-  resources :subscribers
+  resources :subscribers do
+    collection do
+      post :broadcast
+    end
+  end
 
   authenticated :user do
     root :to => 'home#index'
