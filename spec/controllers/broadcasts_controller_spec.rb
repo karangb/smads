@@ -57,14 +57,6 @@ describe BroadcastsController do
     end
   end
 
-  describe "GET edit" do
-    it "assigns the requested broadcast as @broadcast" do
-      broadcast = Broadcast.create! valid_attributes
-      get :edit, {:id => broadcast.to_param}, valid_session
-      assigns(:broadcast).should eq(broadcast)
-    end
-  end
-
   describe "POST create" do
     describe "with valid params" do
       it "creates a new Broadcast" do
@@ -99,65 +91,6 @@ describe BroadcastsController do
         post :create, {:broadcast => {}}, valid_session
         response.should render_template("new")
       end
-    end
-  end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested broadcast" do
-        broadcast = Broadcast.create! valid_attributes
-        # Assuming there are no other broadcasts in the database, this
-        # specifies that the Broadcast created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Broadcast.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => broadcast.to_param, :broadcast => {'these' => 'params'}}, valid_session
-      end
-
-      it "assigns the requested broadcast as @broadcast" do
-        broadcast = Broadcast.create! valid_attributes
-        put :update, {:id => broadcast.to_param, :broadcast => valid_attributes}, valid_session
-        assigns(:broadcast).should eq(broadcast)
-      end
-
-      it "redirects to the broadcast" do
-        broadcast = Broadcast.create! valid_attributes
-        put :update, {:id => broadcast.to_param, :broadcast => valid_attributes}, valid_session
-        response.should redirect_to(broadcast)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the broadcast as @broadcast" do
-        broadcast = Broadcast.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Broadcast.any_instance.stub(:save).and_return(false)
-        put :update, {:id => broadcast.to_param, :broadcast => {}}, valid_session
-        assigns(:broadcast).should eq(broadcast)
-      end
-
-      it "re-renders the 'edit' template" do
-        broadcast = Broadcast.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Broadcast.any_instance.stub(:save).and_return(false)
-        put :update, {:id => broadcast.to_param, :broadcast => {}}, valid_session
-        response.should render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested broadcast" do
-      broadcast = Broadcast.create! valid_attributes
-      expect {
-        delete :destroy, {:id => broadcast.to_param}, valid_session
-      }.to change(Broadcast, :count).by(-1)
-    end
-
-    it "redirects to the broadcasts list" do
-      broadcast = Broadcast.create! valid_attributes
-      delete :destroy, {:id => broadcast.to_param}, valid_session
-      response.should redirect_to(broadcasts_url)
     end
   end
 

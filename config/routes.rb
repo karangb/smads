@@ -1,5 +1,5 @@
 Smads::Application.routes.draw do
-  resources :broadcasts
+  resources :broadcasts, :only => [:show, :index, :create, :new]
 
   resources :subscribers do
     collection do
