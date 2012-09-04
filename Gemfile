@@ -19,6 +19,7 @@ group :test do
   gem "shoulda"
 end
 
+gem 'httparty'
 gem 'jquery-rails'
 gem "thin", ">= 1.4.1"
 gem "haml", ">= 3.1.7"
