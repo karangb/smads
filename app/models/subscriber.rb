@@ -4,7 +4,8 @@ class Subscriber < ActiveRecord::Base
   belongs_to :user
   
   def send_message(message)
-    
+    mobile = Mobile.new
+    mobile.send_sms self.number, message
   end
   
 end

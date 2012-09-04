@@ -68,7 +68,7 @@ describe BroadcastsController do
         @user.subscribers.create!
         @user.subscribers.create!
         
-        # Subscriber.any_instance.should_receive(:send_message).with(@message).times(2)
+        # Subscriber.any_instance.should_receive(:send_message).with(@message).twice
         post :create, {:broadcast => valid_attributes}   
       end
       
