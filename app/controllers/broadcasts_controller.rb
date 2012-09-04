@@ -1,4 +1,5 @@
 class BroadcastsController < ApplicationController
+  before_filter :authenticate_user!
   # GET /broadcasts
   # GET /broadcasts.json
   def index
@@ -14,7 +15,7 @@ class BroadcastsController < ApplicationController
   # GET /broadcasts/1.json
   def show
     @broadcast = Broadcast.find(params[:id])
-
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @broadcast }
@@ -36,7 +37,10 @@ class BroadcastsController < ApplicationController
   # POST /broadcasts.json
   def create
     @broadcast = Broadcast.new(params[:broadcast])
-
+    current_user.subscribers.each do |subscriber|
+      subscriber.send_message(@broadcast.message)
+    end
+    
     respond_to do |format|
       if @broadcast.save
         format.html { redirect_to @broadcast, notice: 'Broadcast was successfully created.' }

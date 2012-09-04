@@ -23,21 +23,20 @@ describe BroadcastsController do
   # This should return the minimal set of attributes required to create a valid
   # Broadcast. As you add validations to Broadcast, be sure to
   # update the return value of this method accordingly.
-  def valid_attributes
-    {}
+  before :each do
+    @message = "Test Message"
+    @user = FactoryGirl.create :user
+    sign_in @user
   end
-
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # BroadcastsController. Be sure to keep this updated too.
-  def valid_session
-    {}
+  
+  def valid_attributes
+    {:message => @message}
   end
 
   describe "GET index" do
     it "assigns all broadcasts as @broadcasts" do
       broadcast = Broadcast.create! valid_attributes
-      get :index, {}, valid_session
+      get :index, {}
       assigns(:broadcasts).should eq([broadcast])
     end
   end
@@ -45,14 +44,14 @@ describe BroadcastsController do
   describe "GET show" do
     it "assigns the requested broadcast as @broadcast" do
       broadcast = Broadcast.create! valid_attributes
-      get :show, {:id => broadcast.to_param}, valid_session
+      get :show, {:id => broadcast.to_param}
       assigns(:broadcast).should eq(broadcast)
     end
   end
 
   describe "GET new" do
     it "assigns a new broadcast as @broadcast" do
-      get :new, {}, valid_session
+      get :new, {}
       assigns(:broadcast).should be_a_new(Broadcast)
     end
   end
@@ -61,18 +60,26 @@ describe BroadcastsController do
     describe "with valid params" do
       it "creates a new Broadcast" do
         expect {
-          post :create, {:broadcast => valid_attributes}, valid_session
+          post :create, {:broadcast => valid_attributes}
         }.to change(Broadcast, :count).by(1)
       end
 
+      it "sends out sms to all the subscribers" do
+        @user.subscribers.create!
+        @user.subscribers.create!
+        
+        # Subscriber.any_instance.should_receive(:send_message).with(@message).times(2)
+        post :create, {:broadcast => valid_attributes}   
+      end
+      
       it "assigns a newly created broadcast as @broadcast" do
-        post :create, {:broadcast => valid_attributes}, valid_session
+        post :create, {:broadcast => valid_attributes}
         assigns(:broadcast).should be_a(Broadcast)
         assigns(:broadcast).should be_persisted
       end
 
       it "redirects to the created broadcast" do
-        post :create, {:broadcast => valid_attributes}, valid_session
+        post :create, {:broadcast => valid_attributes}
         response.should redirect_to(Broadcast.last)
       end
     end
@@ -81,14 +88,14 @@ describe BroadcastsController do
       it "assigns a newly created but unsaved broadcast as @broadcast" do
         # Trigger the behavior that occurs when invalid params are submitted
         Broadcast.any_instance.stub(:save).and_return(false)
-        post :create, {:broadcast => {}}, valid_session
+        post :create, {:broadcast => {}}
         assigns(:broadcast).should be_a_new(Broadcast)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Broadcast.any_instance.stub(:save).and_return(false)
-        post :create, {:broadcast => {}}, valid_session
+        post :create, {:broadcast => {}}
         response.should render_template("new")
       end
     end
